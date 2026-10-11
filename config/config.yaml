@@ -1,0 +1,66 @@
+# Time Series Analysis Configuration
+
+# Data settings
+data:
+  source: "synthetic"  # Options: "synthetic", "yfinance", "file"
+  symbol: "GOOG"  # For yfinance
+  start_date: "2020-01-01"
+  end_date: "2023-01-01"
+  forecast_periods: 60
+  test_size: 0.2
+
+# Model settings
+models:
+  prophet:
+    enabled: true
+    yearly_seasonality: true
+    weekly_seasonality: true
+    daily_seasonality: false
+    seasonality_mode: "additive"
+    changepoint_prior_scale: 0.05
+  
+  arima:
+    enabled: true
+    auto_arima: true
+    max_p: 5
+    max_q: 5
+    max_P: 2
+    max_Q: 2
+    seasonal: true
+    m: 12
+  
+  lstm:
+    enabled: true
+    sequence_length: 60
+    hidden_size: 50
+    num_layers: 2
+    dropout: 0.2
+    epochs: 100
+    batch_size: 32
+    learning_rate: 0.001
+
+# Anomaly detection
+anomaly_detection:
+  enabled: true
+  methods: ["isolation_forest", "autoencoder"]
+  contamination: 0.1
+
+# Visualization
+visualization:
+  style: "seaborn-v0_8"
+  figure_size: [12, 8]
+  dpi: 100
+  save_plots: true
+  plot_format: "png"
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/time_series_analysis.log"
+
+# Output
+output:
+  save_models: true
+  save_predictions: true
+  results_dir: "results"
